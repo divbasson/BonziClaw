@@ -95,6 +95,10 @@ See `.github/workflows/build.yml`.
 
 This repository is an independent community project and is provided for educational and nostalgic software preservation purposes.
 
+## Attribution
+
+Michaél Landry for his bonzo code.
+
 ## Trivy Scan:
 
 Report Summary
