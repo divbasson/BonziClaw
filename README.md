@@ -1,4 +1,4 @@
-# Bonzi Buddy
+# BonziClaw
 
 A modern, spyware-free reinterpretation of BonziBuddy for Windows, designed as a desktop face/front-end for OpenClaw.
 
