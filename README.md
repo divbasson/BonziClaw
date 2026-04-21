@@ -2,7 +2,7 @@
 
 # BonziClaw
 
-A modern, spyware-free reinterpretation of BonziBuddy for Windows, designed as a desktop face/front-end for OpenClaw.
+A modern, spyware-free reinterpretation of BonzoBuddo for Windows, designed as a desktop face/front-end for OpenClaw.
 
 A classic desktop-assistant experience is reimagined here with a privacy-first approach. The project keeps the familiar animated character interaction while avoiding bundled adware/spyware behavior.
 
