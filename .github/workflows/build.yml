@@ -26,3 +26,13 @@ jobs:
 
       - name: Build
         run: dotnet build BonzoBuddo.sln -c Release --no-restore
+
+      - name: Publish
+        run: dotnet publish BonzoBuddo/BonzoBuddo.csproj -c Release -r win-x86 --self-contained false -o ./artifacts/BonzoBuddo-win-x86
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BonzoBuddo-win-x86
+          path: ./artifacts/BonzoBuddo-win-x86
+          if-no-files-found: error
