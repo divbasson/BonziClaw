@@ -6,6 +6,7 @@
 		<Nullable>enable</Nullable>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<PlatformTarget>x86</PlatformTarget>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -13,17 +14,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Reference Include="DaCharFileCLR">
-			<HintPath>..\..\..\..\..\..\..\..\Program Files\Double Agent\Dev\v4.0\DaCharFileCLR.dll</HintPath>
+		<None Include="..\ai-icon.svg">
+			<Link>ai-icon.svg</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="AgentObjects">
+			<HintPath>Interop\AgentObjects.dll</HintPath>
 		</Reference>
-		<Reference Include="DoubleAgent.AxControl">
-			<HintPath>..\..\..\..\..\..\..\..\Program Files\Double Agent\Dev\v4.0\DoubleAgent.AxControl.dll</HintPath>
-		</Reference>
-		<Reference Include="DoubleAgent.Control">
-			<HintPath>..\..\..\..\..\..\..\..\Program Files\Double Agent\Dev\v4.0\DoubleAgent.Control.dll</HintPath>
-		</Reference>
-		<Reference Include="DoubleAgent.Server">
-			<HintPath>..\..\..\..\..\..\..\..\Program Files\Double Agent\Dev\v4.0\DoubleAgent.Server.dll</HintPath>
+		<Reference Include="AxAgentCtl">
+			<HintPath>Interop\AxAgentCtl.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 
@@ -52,5 +54,11 @@
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Svg" Version="3.4.7" />
+	</ItemGroup>
+
+
 
 </Project>

@@ -11,6 +11,19 @@ namespace BonzoBuddo.Helpers;
 /// </summary>
 public static class ApiHelper
 {
+    private static string? TryGetString(HttpClient client, string url)
+    {
+        try
+        {
+            return client.GetStringAsync(url).GetAwaiter().GetResult();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine(ex.Message);
+            return null;
+        }
+    }
+
     public static Dictionary<string, string> GetRecipe(string query)
     {
         var returnValue = new Dictionary<string, string>();
@@ -19,8 +32,8 @@ public static class ApiHelper
         client.DefaultRequestHeaders.Add("X-Api-Key", Keys.NinjaKey());
         try
         {
-            var response = client.GetStringAsync($"https://api.api-ninjas.com/v1/recipe?query={parsedQuery}");
-            var data = JsonNode.Parse(response.Result!);
+            var response = TryGetString(client, $"https://api.api-ninjas.com/v1/recipe?query={parsedQuery}");
+            var data = string.IsNullOrWhiteSpace(response) ? null : JsonNode.Parse(response);
             if (data!.AsArray().Count <= 0)
             {
                 returnValue.Add("NoRecipe",
@@ -32,9 +45,11 @@ public static class ApiHelper
                 RecipeHelper.StoreResults(data!.AsArray());
             }
         }
-        catch (AggregateException ex)
+        catch (Exception ex)
         {
             Debug.WriteLine(ex.Message);
+            returnValue["NoRecipe"] =
+                $"{PersistenceHelper.Name}, I couldn't find any recipes in my book for {query}. I'm sorry.";
         }
         finally
         {
@@ -51,9 +66,9 @@ public static class ApiHelper
         client.DefaultRequestHeaders.Add("X-Api-Key", Keys.NinjaKey());
         try
         {
-            var response = client.GetStringAsync("https://api.api-ninjas.com/v1/randomword");
-            var data = JsonNode.Parse(response.Result!);
-            returnValue = data.Root["word"]!.ToString();
+            var response = TryGetString(client, "https://api.api-ninjas.com/v1/randomword");
+            var data = string.IsNullOrWhiteSpace(response) ? null : JsonNode.Parse(response);
+            returnValue = data?.Root?["word"]?.ToString() ?? string.Empty;
         }
         catch (Exception ex)
         {
@@ -81,12 +96,12 @@ public static class ApiHelper
         client.DefaultRequestHeaders.Add("X-Api-Key", Keys.NinjaKey());
         try
         {
-            var response = client.GetStringAsync($"https://api.api-ninjas.com/v1/dictionary?word={word}");
-            var data = JsonNode.Parse(response.Result)!;
-            var hasDefinition = bool.Parse(data.Root["valid"]!.ToString());
+            var response = TryGetString(client, $"https://api.api-ninjas.com/v1/dictionary?word={word}");
+            var data = string.IsNullOrWhiteSpace(response) ? null : JsonNode.Parse(response);
+            var hasDefinition = bool.TryParse(data?.Root?["valid"]?.ToString(), out var parsedValid) && parsedValid;
             if (hasDefinition)
             {
-                var definition = data.Root["definition"]!.ToString();
+                var definition = data?.Root?["definition"]?.ToString() ?? string.Empty;
                 var definitionWords = definition.Split(' ');
                 if (definitionWords.Length > 100)
                 {
@@ -106,9 +121,9 @@ public static class ApiHelper
                 if (thesaurus)
                     try
                     {
-                        response = client.GetStringAsync($"https://api.api-ninjas.com/v1/thesaurus?word={word}");
-                        data = JsonNode.Parse(response.Result!);
-                        var synonyms = data!.Root["synonyms"]!.AsArray();
+                        response = TryGetString(client, $"https://api.api-ninjas.com/v1/thesaurus?word={word}");
+                        data = string.IsNullOrWhiteSpace(response) ? null : JsonNode.Parse(response);
+                        var synonyms = data?.Root?["synonyms"]?.AsArray() ?? new JsonArray();
                         var sb = new StringBuilder();
                         foreach (var t in synonyms)
                             sb.Append($"{t},\n");
@@ -118,7 +133,7 @@ public static class ApiHelper
                             : $"Here are synonyms for {word}:\n{sb}";
                         returnDictionary.Add("Synonyms", synonymPhrase);
                         sb.Clear();
-                        var antonyms = data!.Root["antonyms"]!.AsArray();
+                        var antonyms = data?.Root?["antonyms"]?.AsArray() ?? new JsonArray();
                         foreach (var a in antonyms)
                             sb.Append($"{a},\n");
                         sb.Replace('_', ' ');
@@ -130,7 +145,7 @@ public static class ApiHelper
                         returnDictionary.Add("Antonyms", antonymPhrase);
                         returnDictionary.Add("Post", Phrases.PostDictionary(word));
                     }
-                    catch (AggregateException ex)
+                    catch (Exception ex)
                     {
                         Debug.WriteLine(ex.Message);
                     }
@@ -141,9 +156,11 @@ public static class ApiHelper
                     $"I could not find a definition for {word}. Try checking your spelling.");
             }
         }
-        catch (AggregateException ex)
+        catch (Exception ex)
         {
             Debug.WriteLine(ex.Message);
+            returnDictionary["Definition"] =
+                $"I could not find a definition for {word}. Try checking your spelling.";
         }
         finally
         {
@@ -185,16 +202,16 @@ public static class ApiHelper
         client.DefaultRequestHeaders.Add("x-api-key", Keys.NewsKey());
         try
         {
-            var response = client.GetStringAsync(url);
-            var data = JsonNode.Parse(response.Result)!;
-            var articles = data.Root["articles"]?.AsArray();
+            var response = TryGetString(client, url);
+            var data = string.IsNullOrWhiteSpace(response) ? null : JsonNode.Parse(response);
+            var articles = data?.Root?["articles"]?.AsArray();
             if (articles is null)
             {
                 newsDictionary.Add("NoResults", Phrases.ErrorMessages()["NoResults"]);
             }
             else
             {
-                if (articles!.Count <= 0 || data.Root["status"]!.ToString().Equals("error"))
+                if (articles.Count <= 0 || string.Equals(data?.Root?["status"]?.ToString(), "error", StringComparison.OrdinalIgnoreCase))
                 {
                     newsDictionary.Add("NoResults", Phrases.ErrorMessages()["NoResults"]);
                 }
@@ -217,10 +234,14 @@ public static class ApiHelper
                 }
             }
         }
-        catch (AggregateException e)
+        catch (Exception e)
         {
             Debug.WriteLine(e.Message);
             newsDictionary.Add("NoResults", Phrases.ErrorMessages()["NoResults"]);
+        }
+        finally
+        {
+            client.Dispose();
         }
 
         return newsDictionary;
@@ -236,16 +257,16 @@ public static class ApiHelper
         client.DefaultRequestHeaders.Add("X-Api-Key", Keys.NinjaKey());
         try
         {
-            var response = client.GetStringAsync("https://api.api-ninjas.com/v1/facts?limit=1");
-            var data = JsonNode.Parse(response.Result)!;
+            var response = client.GetStringAsync("https://api.api-ninjas.com/v1/facts?limit=1").GetAwaiter().GetResult();
+            var data = JsonNode.Parse(response)!;
             var fact = data.AsArray()[0]!["fact"];
 
             return fact!.ToJsonString();
         }
-        catch (JsonException e)
+        catch (Exception e)
         {
             Debug.WriteLine(e.Message);
-            return "I cannot connect to the internet.";
+            return "I couldn't fetch a fact right now.";
         }
         finally
         {
@@ -262,15 +283,13 @@ public static class ApiHelper
         var client = new HttpClient();
         try
         {
-            var response =
-                client.GetStringAsync(
-                    "https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,political,explicit&type=single");
-            var data = JsonNode.Parse(response.Result)!;
-            var joke = data.Root["joke"];
-            Debug.Assert(joke != null, nameof(joke) + " != null");
-            return joke.ToString();
+            var response = TryGetString(client,
+                "https://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,political,explicit&type=single");
+            var data = string.IsNullOrWhiteSpace(response) ? null : JsonNode.Parse(response);
+            var joke = data?.Root?["joke"];
+            return joke?.ToString() ?? "I couldn't fetch a joke right now.";
         }
-        catch (JsonException e)
+        catch (Exception e)
         {
             Debug.WriteLine(e.Message);
             return "I cannot connect to the internet.";
@@ -308,15 +327,15 @@ public static class ApiHelper
             var bytes = Encoding.UTF8.GetBytes(city);
             city = Encoding.UTF8.GetString(bytes);
             var client = new HttpClient();
-            var response = client.GetStringAsync(
+            var response = TryGetString(client,
                 $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={Keys.OpenWeatherKey()}&units={unitType}"
             );
-            var data = JsonNode.Parse(response.Result)!;
+            var data = string.IsNullOrWhiteSpace(response) ? null : JsonNode.Parse(response);
             var currentTemp = data.Root["main"]?["temp"];
             Debug.Assert(currentTemp != null, nameof(currentTemp) + " != null");
             return float.Parse(currentTemp.ToString());
         }
-        catch (JsonException e)
+        catch (Exception e)
         {
             Debug.WriteLine(e.Message);
             return 100f;

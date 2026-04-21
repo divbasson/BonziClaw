@@ -1,0 +1,28 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            6.0.x
+            9.0.x
+
+      - name: Restore
+        run: dotnet restore BonzoBuddo.sln
+
+      - name: Build
+        run: dotnet build BonzoBuddo.sln -c Release --no-restore

@@ -1,4 +1,4 @@
-﻿using DoubleAgent.AxControl;
+﻿using AxAgentObjects;
 
 namespace BonzoBuddo.Helpers;
 
@@ -12,13 +12,13 @@ public class BonziHelper
     /// </summary>
     /// <param name="agent">AxControl from double agent representing the MS Agent.</param>
     /// <param name="agentName">Name of agent.</param>
-    public BonziHelper(AxControl agent, string agentName)
+    public BonziHelper(AxAgent agent, string agentName)
     {
         Agent = agent;
         AgentName = agentName;
     }
 
-    public AxControl Agent { get; }
+    public AxAgent Agent { get; }
     public string AgentName { get; }
 
     /// <summary>
@@ -27,6 +27,10 @@ public class BonziHelper
     /// <param name="phrase">The phrase to be spoken.</param>
     public void Speak(string phrase)
     {
+        // TTS API disabled for now
+        // if (TtsApiHelper.TrySpeak(phrase))
+        //     return;
+
         Agent.Characters[AgentName].Speak(phrase);
     }
 

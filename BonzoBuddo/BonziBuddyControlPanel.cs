@@ -2,8 +2,8 @@
 using BonzoBuddo.BonziAI.Speech;
 using BonzoBuddo.Forms;
 using BonzoBuddo.Helpers;
-using DoubleAgent.AxControl;
-using DoubleAgent.Control;
+using AgentObjects;
+using AxAgentObjects;
 using Control = System.Windows.Forms.Control;
 
 namespace BonzoBuddo;
@@ -19,7 +19,7 @@ public partial class BonziBuddyControlPanel : Form
     //TODO: Documentation
 
     private readonly DateTime _initDt;
-    private readonly AxControl _agent;
+    private readonly AxAgent _agent;
     private readonly Bonzi _bonzi;
     private readonly Control[] _controls;
     private readonly Control[] _disposableControls;
@@ -27,7 +27,7 @@ public partial class BonziBuddyControlPanel : Form
     private bool _isConnected;
     private bool _formDisplayedInit;
     private bool _formHiding;
-    private UserInput _input;
+    private IAgentCtlUserInput? _input;
 
     /// <summary>
     ///     Constructor for Control Panel. Contains all instantiation and loading logic.
@@ -65,9 +65,10 @@ public partial class BonziBuddyControlPanel : Form
             riddleButton,
             babyButton,
             mortgageButton,
-            airQualityButton
+            airQualityButton,
+            askAIButton
         };
-        _agent = new AxControl();
+        _agent = new AxAgent();
         _agent.CreateControl();
         _agent.Characters.Load(AgentName, AcsPath);
         _agent.Characters[AgentName].TTSModeID = TtsId;
@@ -77,7 +78,7 @@ public partial class BonziBuddyControlPanel : Form
         _agent.Characters[AgentName].Show();
 
         _helper = UiHelper.CreateCommandMenu(new BonziHelper(_agent, AgentName));
-        _input = new UserInput(null);
+        _input = null;
 
 
         if (!_bonzi.Initialized)
@@ -107,11 +108,11 @@ public partial class BonziBuddyControlPanel : Form
         }
 
 
-        _agent.CtlCommand += agent_CtlCommand;
+        _agent.Command += agent_CtlCommand;
     }
 
 
-    private void agent_Move(object sender, CtlMoveEvent e)
+    private void agent_Move(object sender, _AgentEvents_MoveEvent e)
     {
         //TODO: Add more
         _helper.Stop();
@@ -119,7 +120,7 @@ public partial class BonziBuddyControlPanel : Form
         _helper.Speak("What do you think you're doing?!");
     }
 
-    private void agent_DblClick(object sender, CtlDblClickEvent e)
+    private void agent_DblClick(object sender, _AgentEvents_DblClickEvent e)
     {
         //TODO: Add more
         _helper.Play("Sad");
@@ -131,18 +132,18 @@ public partial class BonziBuddyControlPanel : Form
     /// </summary>
     /// <param name="sender">Sender.</param>
     /// <param name="e">CtlCommandEvent args, use EventArgs.Empty</param>
-    private void agent_CtlCommand(object sender, CtlCommandEvent e)
+    private void agent_CtlCommand(object sender, _AgentEvents_CommandEvent e)
     {
-
         if (UiHelper.RefreshCheckConnection(_initDt))
         {
             Debug.WriteLine("Refreshing connection check...");
             _isConnected = UiHelper.CheckInternetConnection();
         }
         Debug.WriteLine($"Connected: {_isConnected}");
+        var userInput = (IAgentCtlUserInput)e.userInput;
         if (_isConnected)
         {
-            switch (e.UserInput.Name)
+            switch (userInput.Name)
             {
                 case "Joke":
                     jokeButton_Click(sender, EventArgs.Empty);
@@ -430,5 +431,47 @@ public partial class BonziBuddyControlPanel : Form
         _helper.Play("GestureRight");
         var recipe = new RecipeSearchForm(_helper, _bonzi);
         recipe.Show();
+    }
+
+    private void askAIButton_Click(object sender, EventArgs e)
+    {
+        _helper.Stop();
+        _helper.Play("Think");
+        new AskAIForm(_helper).Show();
+    }
+
+    /// <summary>
+    ///     Speak a message from an external source (e.g. Telegram) using the Double Agent with animation.
+    /// </summary>
+    public void SpeakFromOpenClaw(string text)
+    {
+        if (InvokeRequired)
+        {
+            Invoke(() => SpeakFromOpenClaw(text));
+            return;
+        }
+
+        try
+        {
+            _helper.Play("Think");
+            _helper.Speak(text);
+        }
+        catch
+        {
+            // Ignore if agent not ready
+        }
+    }
+
+    public void ShowFromTray()
+    {
+        Show();
+        WindowState = FormWindowState.Normal;
+        Activate();
+    }
+
+    public void OpenAskAiForm()
+    {
+        ShowFromTray();
+        askAIButton_Click(this, EventArgs.Empty);
     }
 }

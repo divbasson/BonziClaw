@@ -14,7 +14,8 @@ internal static class Program
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
-        var bonzi = new BonziBuddyControlPanel();
-        Application.Run();
+        Helpers.DotEnvLoader.Load();
+        Helpers.AppConfigStore.Load();
+        Application.Run(new TrayApplicationContext());
     }
 }

@@ -51,10 +51,11 @@
             this.mortgageButton = new System.Windows.Forms.Button();
             this.airQualityButton = new System.Windows.Forms.Button();
             this.randomWordButton = new System.Windows.Forms.Button();
+            this.askAIButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
+            //
             // jokeButton
-            // 
+            //
             this.jokeButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.jokeButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.jokeButton.Location = new System.Drawing.Point(11, 154);
@@ -65,9 +66,9 @@
             this.jokeButton.Text = "Joke";
             this.jokeButton.UseVisualStyleBackColor = true;
             this.jokeButton.Click += new System.EventHandler(this.jokeButton_Click);
-            // 
+            //
             // weatherButton
-            // 
+            //
             this.weatherButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.weatherButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.weatherButton.Location = new System.Drawing.Point(198, 154);
@@ -78,44 +79,44 @@
             this.weatherButton.Text = "Weather";
             this.weatherButton.UseVisualStyleBackColor = true;
             this.weatherButton.Click += new System.EventHandler(this.weatherButton_Click);
-            // 
+            //
             // cityText
-            // 
+            //
             this.cityText.Location = new System.Drawing.Point(116, 52);
             this.cityText.Name = "cityText";
             this.cityText.PlaceholderText = "City";
             this.cityText.Size = new System.Drawing.Size(258, 31);
             this.cityText.TabIndex = 101;
-            // 
+            //
             // labelName
-            // 
+            //
             this.labelName.AutoSize = true;
             this.labelName.Location = new System.Drawing.Point(12, 9);
             this.labelName.Name = "labelName";
             this.labelName.Size = new System.Drawing.Size(61, 24);
             this.labelName.TabIndex = 3;
             this.labelName.Text = "Name:";
-            // 
+            //
             // labelCity
-            // 
+            //
             this.labelCity.AutoSize = true;
             this.labelCity.Location = new System.Drawing.Point(12, 55);
             this.labelCity.Name = "labelCity";
             this.labelCity.Size = new System.Drawing.Size(46, 24);
             this.labelCity.TabIndex = 4;
             this.labelCity.Text = "City:";
-            // 
+            //
             // nameText
-            // 
+            //
             this.nameText.Location = new System.Drawing.Point(116, 12);
             this.nameText.Name = "nameText";
             this.nameText.PlaceholderText = "City";
             this.nameText.Size = new System.Drawing.Size(258, 31);
             this.nameText.TabIndex = 100;
             this.nameText.Text = "Name";
-            // 
+            //
             // submitButton
-            // 
+            //
             this.submitButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.submitButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.submitButton.Location = new System.Drawing.Point(400, 12);
@@ -126,9 +127,9 @@
             this.submitButton.Text = "Submit";
             this.submitButton.UseVisualStyleBackColor = true;
             this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
-            // 
+            //
             // bonziLabel
-            // 
+            //
             this.bonziLabel.AutoSize = true;
             this.bonziLabel.BackColor = System.Drawing.Color.Transparent;
             this.bonziLabel.Font = new System.Drawing.Font("Comic Sans MS", 36F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point);
@@ -139,9 +140,9 @@
             this.bonziLabel.Text = "Bonzi Buddy";
             this.bonziLabel.Visible = false;
             this.bonziLabel.Click += new System.EventHandler(this.bonziLabel_Click);
-            // 
+            //
             // insultButton
-            // 
+            //
             this.insultButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.insultButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.insultButton.Location = new System.Drawing.Point(574, 352);
@@ -152,9 +153,9 @@
             this.insultButton.Text = "Insult";
             this.insultButton.UseVisualStyleBackColor = true;
             this.insultButton.Click += new System.EventHandler(this.insultButton_Click);
-            // 
+            //
             // factButton
-            // 
+            //
             this.factButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.factButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.factButton.Location = new System.Drawing.Point(385, 154);
@@ -165,9 +166,9 @@
             this.factButton.Text = "Fact";
             this.factButton.UseVisualStyleBackColor = true;
             this.factButton.Click += new System.EventHandler(this.factButton_Click);
-            // 
+            //
             // newsButton
-            // 
+            //
             this.newsButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.newsButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.newsButton.Location = new System.Drawing.Point(11, 253);
@@ -178,9 +179,9 @@
             this.newsButton.Text = "News";
             this.newsButton.UseVisualStyleBackColor = true;
             this.newsButton.Click += new System.EventHandler(this.newsButton_Click);
-            // 
+            //
             // songButton
-            // 
+            //
             this.songButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.songButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.songButton.Location = new System.Drawing.Point(198, 253);
@@ -191,9 +192,9 @@
             this.songButton.Text = "Song";
             this.songButton.UseVisualStyleBackColor = true;
             this.songButton.Click += new System.EventHandler(this.songButton_Click);
-            // 
+            //
             // virusButton
-            // 
+            //
             this.virusButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.virusButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.virusButton.Location = new System.Drawing.Point(385, 352);
@@ -203,9 +204,9 @@
             this.virusButton.TabIndex = 107;
             this.virusButton.Text = "Information";
             this.virusButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // showHideButton
-            // 
+            //
             this.showHideButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.showHideButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.showHideButton.Location = new System.Drawing.Point(574, 451);
@@ -216,9 +217,9 @@
             this.showHideButton.Text = "Go away Bonzi";
             this.showHideButton.UseVisualStyleBackColor = true;
             this.showHideButton.Click += new System.EventHandler(this.showHideButton_Click);
-            // 
+            //
             // dictionaryButton
-            // 
+            //
             this.dictionaryButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.dictionaryButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.dictionaryButton.Location = new System.Drawing.Point(11, 352);
@@ -229,9 +230,9 @@
             this.dictionaryButton.Text = "Dictionary";
             this.dictionaryButton.UseVisualStyleBackColor = true;
             this.dictionaryButton.Click += new System.EventHandler(this.dictionaryButton_Click);
-            // 
+            //
             // recipeButton
-            // 
+            //
             this.recipeButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.recipeButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.recipeButton.Location = new System.Drawing.Point(572, 253);
@@ -242,9 +243,9 @@
             this.recipeButton.Text = "Recipe";
             this.recipeButton.UseVisualStyleBackColor = true;
             this.recipeButton.Click += new System.EventHandler(this.recipeButton_Click);
-            // 
+            //
             // triviaButton
-            // 
+            //
             this.triviaButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.triviaButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.triviaButton.Location = new System.Drawing.Point(572, 154);
@@ -254,9 +255,9 @@
             this.triviaButton.TabIndex = 111;
             this.triviaButton.Text = "Trivia";
             this.triviaButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // riddleButton
-            // 
+            //
             this.riddleButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.riddleButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.riddleButton.Location = new System.Drawing.Point(385, 253);
@@ -266,9 +267,9 @@
             this.riddleButton.TabIndex = 112;
             this.riddleButton.Text = "Riddle";
             this.riddleButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // babyButton
-            // 
+            //
             this.babyButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.babyButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.babyButton.Location = new System.Drawing.Point(12, 451);
@@ -278,9 +279,9 @@
             this.babyButton.TabIndex = 113;
             this.babyButton.Text = "Name my baby";
             this.babyButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // mortgageButton
-            // 
+            //
             this.mortgageButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.mortgageButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.mortgageButton.Location = new System.Drawing.Point(198, 451);
@@ -290,9 +291,9 @@
             this.mortgageButton.TabIndex = 114;
             this.mortgageButton.Text = "Calculate my mortgage";
             this.mortgageButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // airQualityButton
-            // 
+            //
             this.airQualityButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.airQualityButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.airQualityButton.Location = new System.Drawing.Point(385, 451);
@@ -302,9 +303,9 @@
             this.airQualityButton.TabIndex = 115;
             this.airQualityButton.Text = "What\'s the air quality right now?";
             this.airQualityButton.UseVisualStyleBackColor = true;
-            // 
+            //
             // randomWordButton
-            // 
+            //
             this.randomWordButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
             this.randomWordButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
             this.randomWordButton.Location = new System.Drawing.Point(198, 352);
@@ -315,13 +316,27 @@
             this.randomWordButton.Text = "Random Word";
             this.randomWordButton.UseVisualStyleBackColor = true;
             this.randomWordButton.Click += new System.EventHandler(this.randomWordButton_Click);
-            // 
+            //
+            // askAIButton
+            //
+            this.askAIButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Gray;
+            this.askAIButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Gray;
+            this.askAIButton.Location = new System.Drawing.Point(11, 550);
+            this.askAIButton.Margin = new System.Windows.Forms.Padding(2);
+            this.askAIButton.Name = "askAIButton";
+            this.askAIButton.Size = new System.Drawing.Size(716, 63);
+            this.askAIButton.TabIndex = 117;
+            this.askAIButton.Text = "Ask Bonzi (OpenClaw AI)";
+            this.askAIButton.UseVisualStyleBackColor = true;
+            this.askAIButton.Click += new System.EventHandler(this.askAIButton_Click);
+            //
             // BonziBuddyControlPanel
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(738, 873);
+            this.Controls.Add(this.askAIButton);
             this.Controls.Add(this.randomWordButton);
             this.Controls.Add(this.airQualityButton);
             this.Controls.Add(this.mortgageButton);
@@ -376,5 +391,6 @@
         private Button mortgageButton;
         private Button airQualityButton;
         private Button randomWordButton;
+        private Button askAIButton;
     }
 }
