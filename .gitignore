@@ -366,5 +366,3 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Manual Files
-Keys.cs
-IllegalPhrases.cs
